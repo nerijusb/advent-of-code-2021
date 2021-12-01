@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Day01_2 extends Day01_1 {
     public static void main(String[] args) {
-        System.out.println("Result: " + new Day01_2().getResult());
+        System.out.println("Sums larger than the previous sum: " + new Day01_2().getResult());
     }
 
     private int getResult() {
