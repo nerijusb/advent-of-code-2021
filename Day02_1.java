@@ -41,9 +41,9 @@ public class Day02_1
                 .stream()
                 .map(i -> {
                     String[] parts = i.split(" ");
-                    InstructionDirection Instruction = InstructionDirection.valueOf(parts[0].toUpperCase(Locale.ROOT));
+                    InstructionDirection direction = InstructionDirection.valueOf(parts[0].toUpperCase(Locale.ROOT));
                     int amount = Integer.parseInt(parts[1]);
-                    return new Instruction(Instruction, amount);
+                    return new Instruction(direction, amount);
                 })
                 .collect(Collectors.toList());
     }
