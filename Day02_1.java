@@ -8,24 +8,19 @@ import java.util.stream.Collectors;
  *
  * @author Nerijus
  */
-public class Day02_1
-{
-    public static void main(String[] args)
-    {
+public class Day02_1 {
+    public static void main(String[] args) {
         System.out.println("Horizontal position X final depth = " + new Day02_1().getResult());
     }
 
-    private int getResult()
-    {
+    private int getResult() {
         List<Instruction> instructions = readInstructions();
 
         int horizontalPosition = 0;
         int depth = 0;
 
-        for (Instruction instruction : instructions)
-        {
-            switch (instruction.direction)
-            {
+        for (Instruction instruction : instructions) {
+            switch (instruction.direction) {
                 case FORWARD -> horizontalPosition = horizontalPosition + instruction.amount;
                 case UP -> depth = depth - instruction.amount;
                 case DOWN -> depth = depth + instruction.amount;
@@ -35,8 +30,7 @@ public class Day02_1
         return horizontalPosition * depth;
     }
 
-    List<Instruction> readInstructions()
-    {
+    List<Instruction> readInstructions() {
         return Inputs.readStrings("Day02")
                 .stream()
                 .map(i -> {
@@ -48,20 +42,17 @@ public class Day02_1
                 .collect(Collectors.toList());
     }
 
-    static class Instruction
-    {
+    static class Instruction {
         InstructionDirection direction;
         int amount;
 
-        Instruction(InstructionDirection direction, int amount)
-        {
+        Instruction(InstructionDirection direction, int amount) {
             this.direction = direction;
             this.amount = amount;
         }
     }
 
-    enum InstructionDirection
-    {
+    enum InstructionDirection {
         FORWARD,
         UP,
         DOWN

@@ -18,10 +18,8 @@ public class Day02_2 extends Day02_1 {
         int depth = 0;
         int aim = 0;
 
-        for (Instruction instruction : instructions)
-        {
-            switch (instruction.direction)
-            {
+        for (Instruction instruction : instructions) {
+            switch (instruction.direction) {
                 case UP -> aim = aim - instruction.amount;
                 case DOWN -> aim = aim + instruction.amount;
                 case FORWARD -> {
