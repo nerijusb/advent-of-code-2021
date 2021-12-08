@@ -46,83 +46,65 @@ public class Day08_2 extends Day08_1 {
     private Map<Integer, String[]> decodeMapping(String[] inputNumbers) {
         Map<Integer, String[]> mapping = new HashMap<>();
         // find known first
-        mapping.put(1, Arrays.stream(inputNumbers).filter(n -> n.length() == 2).findFirst().map(n -> n.split("")).orElseThrow());
-        mapping.put(4, Arrays.stream(inputNumbers).filter(n -> n.length() == 4).findFirst().map(n -> n.split("")).orElseThrow());
-        mapping.put(7, Arrays.stream(inputNumbers).filter(n -> n.length() == 3).findFirst().map(n -> n.split("")).orElseThrow());
-        mapping.put(8, Arrays.stream(inputNumbers).filter(n -> n.length() == 7).findFirst().map(n -> n.split("")).orElseThrow());
+        mapping.put(1, findBySize(inputNumbers, 2));
+        mapping.put(4, findBySize(inputNumbers, 4));
+        mapping.put(7, findBySize(inputNumbers, 3));
+        mapping.put(8, findBySize(inputNumbers, 7));
         // find rest
-        mapping.put(0, find(0, inputNumbers, mapping).split(""));
-        mapping.put(2, find(2, inputNumbers, mapping).split(""));
-        mapping.put(3, find(3, inputNumbers, mapping).split(""));
-        mapping.put(5, find(5, inputNumbers, mapping).split(""));
-        mapping.put(6, find(6, inputNumbers, mapping).split(""));
-        mapping.put(9, find(9, inputNumbers, mapping).split(""));
+        updateMapping(inputNumbers, mapping);
         return mapping;
     }
 
-    String find(int toFind, String[] encodedNumbers, Map<Integer, String[]> mapping) {
+    private String[] findBySize(String[] inputNumbers, int size) {
+        return Arrays.stream(inputNumbers)
+                .filter(n -> n.length() == size)
+                .findFirst()
+                .map(n -> n.split(""))
+                .orElseThrow();
+    }
+
+    void updateMapping(String[] encodedNumbers, Map<Integer, String[]> mapping) {
         for (String encoded : encodedNumbers) {
+            String[] encodedParts = encoded.split("");
             if (encoded.length() == 2) {
-                if (toFind == 1) {
-                    return encoded;
-                }
+                mapping.put(1, encodedParts);
             } else if (encoded.length() == 4) {
-                if (toFind == 4) {
-                    return encoded;
-                }
+                mapping.put(4, encodedParts);
             } else if (encoded.length() == 3) {
-                if (toFind == 7) {
-                    return encoded;
-                }
+                mapping.put(7, encodedParts);
             } else if (encoded.length() == 7) {
-                if (toFind == 8) {
-                    return encoded;
-                }
+                mapping.put(8, encodedParts);
             } else if (encoded.length() == 6) {
                 String[] four = mapping.get(4);
-                if (List.of(encoded.split("")).containsAll(List.of(four))) {
+                if (List.of(encodedParts).containsAll(List.of(four))) {
                     String[] seven = mapping.get(7);
-                    if (List.of(encoded.split("")).containsAll(List.of(seven))) {
-                        if (toFind == 9) {
-                            return encoded;
-                        }
+                    if (List.of(encodedParts).containsAll(List.of(seven))) {
+                        mapping.put(9, encodedParts);
                     }
                 } else {
                     String[] seven = mapping.get(7);
-                    if (List.of(encoded.split("")).containsAll(List.of(seven))) {
-                        if (toFind == 0) {
-                            return encoded;
-                        }
+                    if (List.of(encodedParts).containsAll(List.of(seven))) {
+                        mapping.put(0, encodedParts);
                     } else {
-                        if (toFind == 6) {
-                            return encoded;
-                        }
+                        mapping.put(6, encodedParts);
                     }
                 }
             // size 5
             } else {
                 String[] seven = mapping.get(7);
-                if (Arrays.asList(encoded.split("")).containsAll(List.of(seven))) {
-                    if (toFind == 3) {
-                        return encoded;
-                    }
+                if (Arrays.asList(encodedParts).containsAll(List.of(seven))) {
+                    mapping.put(3, encodedParts);
                 } else if (containsThreeOf(encoded, mapping.get(4))) {
-                    if (toFind == 5) {
-                        return encoded;
-                    }
+                    mapping.put(5, encodedParts);
                 } else {
-                    if (toFind == 2) {
-                        return encoded;
-                    }
+                    mapping.put(2, encodedParts);
                 }
             }
         }
-
-        throw new IllegalStateException("Could not find encoded number for: " + toFind);
     }
 
     private boolean containsThreeOf(String number, String[] parts) {
-        List<String> numberParts = Arrays.asList(number.split(""));
+        List<String> numberParts = List.of(number.split(""));
         return Arrays.stream(parts).filter(numberParts::contains).count() == 3;
     }
 
