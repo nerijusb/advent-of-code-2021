@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * Part two of
- * https://adventofcode.com/2021/day/7
+ * https://adventofcode.com/2021/day/8
  *
  * Rules used:
  * 0: 6parts > size(6) & !allOf(4) & allOf(7)
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class Day08_2 extends Day08_1 {
     public static void main(String[] args) {
-        System.out.println("Sum of all output values:" + new Day08_2().getResult());
+        System.out.println("Sum of all output values: " + new Day08_2().getResult());
     }
 
     private int getResult() {
