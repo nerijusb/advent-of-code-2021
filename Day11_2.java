@@ -10,7 +10,7 @@ public class Day11_2 extends Day11_1 {
     }
 
     private int getResult() {
-        int[][] map = readMap();
+        int[][] map = Inputs.readIntMap("Day11");
         int step = 0;
         while (true) {
             step++;

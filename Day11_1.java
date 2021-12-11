@@ -15,15 +15,13 @@ public class Day11_1 {
     }
 
     private long getResult() {
-        int[][] map = readMap();
-
+        int[][] map = Inputs.readIntMap("Day11");
         int totalFlashes = 0;
         for (int i = 0; i < 100; i++) {
             totalFlashes = totalFlashes + executeStep(map);
             System.out.println("Step: " + (i + 1));
             print(map);
         }
-
 
         return totalFlashes;
     }
@@ -65,18 +63,6 @@ public class Day11_1 {
             });
         });
         return newFlashes;
-    }
-
-    int[][] readMap() {
-        List<String> rows = Inputs.readStrings("Day11");
-        int[][] map = new int[rows.size()][rows.get(0).length()];
-        for (int y = 0; y < rows.size(); y++) {
-            String[] row = rows.get(y).split("");
-            for (int x = 0; x < row.length; x++) {
-                map[y][x] = Integer.parseInt(row[x]);
-            }
-        }
-        return map;
     }
 
     void print(int[][] map) {

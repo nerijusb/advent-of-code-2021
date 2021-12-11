@@ -34,4 +34,18 @@ final class Inputs {
                 .map(Integer::valueOf)
                 .collect(toList());
     }
+
+    static int[][] readIntMap(String fileName) {
+        List<String> rows = readStrings(fileName);
+        int[][] map = new int[rows.size()][rows.get(0).length()];
+        for (int y = 0; y < rows.size(); y++)
+        {
+            String[] points = rows.get(y).split("");
+            for (int x = 0; x < points.length; x++)
+            {
+                map[y][x] = Integer.parseInt(points[x]);
+            }
+        }
+        return map;
+    }
 }

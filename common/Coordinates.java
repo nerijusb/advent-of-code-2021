@@ -43,7 +43,14 @@ public class Coordinates {
         return coordinates;
     }
 
-    public List<Coordinates> allValidAdjacentAndDiagonal() {
+    public List<Coordinates> allValidAdjacent(int maxX, int maxY) {
+        return allAdjacent()
+                .stream()
+                .filter(c -> c.x >= 0 && c.y >= 0 && c.x < maxX && c.y < maxY)
+                .collect(Collectors.toList());
+    }
+
+    public List<Coordinates> allAdjacentAndDiagonal() {
         List<Coordinates> coordinates = allAdjacent();
         // top left
         coordinates.add(new Coordinates(x - 1, y + 1));
@@ -57,7 +64,7 @@ public class Coordinates {
     }
 
     public List<Coordinates> allValidAdjacentAndDiagonal(int maxX, int maxY) {
-        return allValidAdjacentAndDiagonal()
+        return allAdjacentAndDiagonal()
                 .stream()
                 .filter(c -> c.x >= 0 && c.y >= 0 && c.x < maxX && c.y < maxY)
                 .collect(Collectors.toList());
