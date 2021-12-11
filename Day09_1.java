@@ -19,14 +19,11 @@ public class Day09_1 {
         return calculateRiskLevel(map);
     }
 
-    private long calculateRiskLevel(int[][] map)
-    {
+    private long calculateRiskLevel(int[][] map) {
         List<Integer> lowPoints = new ArrayList<>();
-        for (int y = 0; y < map.length; y++)
-        {
+        for (int y = 0; y < map.length; y++) {
             int[] row = map[y];
-            for (int x = 0; x < row.length; x++)
-            {
+            for (int x = 0; x < row.length; x++) {
                 int level = row[x];
                 boolean lowPoint = new Coordinates(x, y)
                         .allValidAdjacent(row.length, map.length)

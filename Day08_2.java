@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Part two of
  * https://adventofcode.com/2021/day/8
- *
+ * <p>
  * Rules used:
  * 0: 6parts > size(6) & !allOf(4) & allOf(7)
  * 1: 2parts > size(2)
@@ -89,7 +89,7 @@ public class Day08_2 extends Day08_1 {
                         mapping.put(6, encodedParts);
                     }
                 }
-            // size 5
+                // size 5
             } else {
                 String[] seven = mapping.get(7);
                 if (Arrays.asList(encodedParts).containsAll(List.of(seven))) {
