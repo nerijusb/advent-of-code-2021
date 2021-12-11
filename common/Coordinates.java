@@ -3,6 +3,7 @@ package common;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Coordinates {
     public int x;
@@ -40,6 +41,26 @@ public class Coordinates {
             coordinates.add(adjacent(direction));
         }
         return coordinates;
+    }
+
+    public List<Coordinates> allValidAdjacentAndDiagonal() {
+        List<Coordinates> coordinates = allAdjacent();
+        // top left
+        coordinates.add(new Coordinates(x - 1, y + 1));
+        // top right
+        coordinates.add(new Coordinates(x + 1, y + 1));
+        // bottom left
+        coordinates.add(new Coordinates(x - 1, y - 1));
+        // bottom right
+        coordinates.add(new Coordinates(x + 1, y - 1));
+        return coordinates;
+    }
+
+    public List<Coordinates> allValidAdjacentAndDiagonal(int maxX, int maxY) {
+        return allValidAdjacentAndDiagonal()
+                .stream()
+                .filter(c -> c.x >= 0 && c.y >= 0 && c.x < maxX && c.y < maxY)
+                .collect(Collectors.toList());
     }
 
     @Override
