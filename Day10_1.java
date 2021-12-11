@@ -43,7 +43,7 @@ public class Day10_1 {
     }
 
     boolean isMismatch(String openTag, String closeTag) {
-        return List.of("()", "[]", "{}", "<>").contains(openTag + closeTag);
+        return !List.of("()", "[]", "{}", "<>").contains(openTag + closeTag);
     }
 
     boolean isOpenChar(String aChar) {
