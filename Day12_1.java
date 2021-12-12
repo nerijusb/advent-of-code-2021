@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,17 +22,25 @@ public class Day12_1 {
                 .stream()
                 .map(Link::new)
                 .collect(Collectors.toList());
-        return new PathFinder(links).findAll().size();
+        return new PathFinder(links)
+                .findAll()
+                .size();
     }
 
     static class PathFinder {
         List<Link> links;
         Set<String> caves;
         List<Path> allPaths = new ArrayList<>();
+        String canVisitTwice;
 
         public PathFinder(List<Link> links) {
+            this(links, null);
+        }
+
+        public PathFinder(List<Link> links, String canVisitTwice) {
             this.links = links;
             this.caves = getCaves(links);
+            this.canVisitTwice = canVisitTwice;
         }
 
         List<Path> findAll() {
@@ -53,9 +62,19 @@ public class Day12_1 {
                 currentPath.print();
                 return;
             }
-            if (!isBig(nextCave) && currentPath.isVisited(nextCave)) {
-                // cannot go back to small cave
-                return;
+            boolean visited = currentPath.isVisited(nextCave);
+            if (isSmall(nextCave) && visited) {
+                if (canVisitTwice == null || !canVisitTwice.equals(nextCave)) {
+                    // cannot go back to small cave
+                    return;
+                }
+                if (currentPath.visitedTwice != null) {
+                    // already visited this once
+                    return;
+                }
+
+                // allow visit twice
+                currentPath.visitedTwice = nextCave;
             }
 
             currentPath.add(nextCave);
@@ -68,18 +87,23 @@ public class Day12_1 {
                     .map(link -> link.from.equals(cave) ? link.to : link.from)
                     .collect(Collectors.toList());
         }
+    }
 
-        boolean isBig(String cave) {
-            return cave.toUpperCase().equals(cave);
-        }
+    static boolean isSmall(String cave) {
+        return !cave.toUpperCase().equals(cave);
+    }
 
-        private boolean isEnd(String cave) {
-            return "end".equals(cave);
-        }
+    static boolean isEnd(String cave) {
+        return "end".equals(cave);
+    }
+
+    static boolean isStart(String cave) {
+        return "start".equals(cave);
     }
 
     static class Path {
         List<String> path;
+        String visitedTwice;
 
         public Path() {
             path = new ArrayList<>();
@@ -87,6 +111,7 @@ public class Day12_1 {
 
         public Path(Path from) {
             this.path = new ArrayList<>(from.path);
+            this.visitedTwice = from.visitedTwice;
         }
 
         void add(String cave) {
@@ -95,6 +120,19 @@ public class Day12_1 {
 
         private boolean isVisited(String cave) {
             return path.contains(cave);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Path path1 = (Path) o;
+            return path.equals(path1.path);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(path);
         }
 
         void print() {
