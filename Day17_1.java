@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 /**
  * Part one of
@@ -20,7 +19,7 @@ public class Day17_1 {
     }
 
     private int getResult() {
-        TargetArea area = readTargetArea();
+        TargetArea area = readTargetArea("Day17");
         List<Integer> maxYs = new ArrayList<>();
         for (int xVelocity = -100; xVelocity < 100; xVelocity++) {
             for (int yVelocity = -100; yVelocity < 100; yVelocity++) {
@@ -41,7 +40,7 @@ public class Day17_1 {
         return maxYs.stream().mapToInt(i -> i).max().orElse(-1);
     }
 
-    private void step(Coordinates probe, Coordinates velocity) {
+    void step(Coordinates probe, Coordinates velocity) {
         probe.x = probe.x + velocity.x;
         probe.y = probe.y + velocity.y;
         if (velocity.x > 0) {
@@ -52,8 +51,8 @@ public class Day17_1 {
         velocity.y = velocity.y - 1;
     }
 
-    TargetArea readTargetArea() {
-        String area = Inputs.readString("Day17_demo");
+    TargetArea readTargetArea(String input) {
+        String area = Inputs.readString(input);
         Matcher matcher = INPUT_PATTERN.matcher(area);
         if (matcher.find()) {
             return new TargetArea(
@@ -86,15 +85,7 @@ public class Day17_1 {
         }
 
         boolean isOver(Coordinates position) {
-            return position.x > xTo || position.y < yTo;
-        }
-
-        List<Coordinates> getCoordinates() {
-            List<Coordinates> all = new ArrayList<>();
-            IntStream.range(xFrom, xTo).forEach(x ->
-                    IntStream.range(yFrom, yTo).forEach(y ->
-                            all.add(new Coordinates(x, y))));
-            return all;
+            return position.x > xTo || position.y < yFrom;
         }
     }
 }
