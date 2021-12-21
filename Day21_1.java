@@ -39,13 +39,13 @@ public class Day21_1 {
         }
 
         void move(int places) {
-            int newPosition = (this.position + places) % 10;
+            int newPosition = (position + places) % 10;
             if (newPosition == 0) {
-                this.position = 10;
+                position = 10;
             } else {
-                this.position = newPosition;
+                position = newPosition;
             }
-            score = score + this.position;
+            score = score + position;
         }
     }
 
