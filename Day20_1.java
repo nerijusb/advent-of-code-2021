@@ -21,10 +21,22 @@ public class Day20_1 {
         for (int i = 0; i < 2; i++) {
             image = enhance(image, algorithm);
         }
+        // this approach produces lit borders, so subtract them from the final image
+        image = crop(image, 108);
         print(image);
 
-        // this approach produces lit borders, so subtract them from the final image
-        return countLitPixels(image) - image.length - (3 * (image.length - 2));
+        return countLitPixels(image);
+    }
+
+    String[][] crop(String[][] image, int size) {
+        int offset = (image.length - size) / 2;
+        String[][] croppedImage = new String[size][size];
+        for (int y = 0; y < croppedImage.length; y++) {
+            for (int x = 0; x < croppedImage[y].length; x++) {
+                croppedImage[y][x] = image[y+offset][x+offset];
+            }
+        }
+        return croppedImage;
     }
 
     String[][] readImage(String image) {
@@ -63,7 +75,7 @@ public class Day20_1 {
         }
     }
 
-    private int countLitPixels(String[][] image) {
+    int countLitPixels(String[][] image) {
         int count = 0;
         for (String[] rows : image) {
             for (String pixel : rows) {
@@ -75,7 +87,7 @@ public class Day20_1 {
         return count;
     }
 
-    private String[][] enhance(String[][] image, Algorithm algorithm) {
+    String[][] enhance(String[][] image, Algorithm algorithm) {
         String[][] newImage = new String[image.length][image[0].length];
         for (int y = 0; y < newImage.length; y++) {
             for (int x = 0; x < newImage[y].length; x++) {
