@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
  */
 public class Day14_1 {
     public static void main(String[] args) {
-        System.out.println("" + new Day14_1().getResult());
+        System.out.println("Quantity of the most common element minus quantity of the least common element: "
+                + new Day14_1().getResult());
     }
 
     private int getResult() {
