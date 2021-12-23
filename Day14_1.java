@@ -34,6 +34,7 @@ public class Day14_1 {
                     newChain.addLast(second);
                 }
             }
+            System.out.print(i + "\n");
             newChain.forEach(System.out::print);
             System.out.print("\n");
             chain = newChain;
@@ -50,7 +51,7 @@ public class Day14_1 {
         return max - min;
     }
 
-    private Map<String, String> readInstructions(String instructions) {
+    Map<String, String> readInstructions(String instructions) {
         return Arrays.stream(instructions.split("\n"))
                 .collect(Collectors.toMap(i -> i.split(" -> ")[0], i -> i.split(" -> ")[1]));
     }
