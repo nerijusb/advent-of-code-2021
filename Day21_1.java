@@ -8,7 +8,7 @@ public class Day21_1 {
     // private static final Pattern INPUT_PATTERN = Pattern.compile("Player (?<player>\\d) starting position: (?<position>\\d)");
 
     public static void main(String[] args) {
-        System.out.println("" + new Day21_1().getResult());
+        System.out.println("Score multiplying losing player score by the number of times the die was rolled: " + new Day21_1().getResult());
     }
 
     private int getResult() {
