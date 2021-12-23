@@ -28,10 +28,10 @@ public class Coordinates {
 
     public Coordinates adjacent(Direction direction) {
         return switch (direction) {
-            case UP -> new Coordinates(x, y + 1);
-            case DOWN -> new Coordinates(x, y - 1);
-            case LEFT -> new Coordinates(x - 1, y);
-            case RIGHT -> new Coordinates(x + 1, y);
+            case UP -> top();
+            case DOWN -> bottom();
+            case LEFT -> left();
+            case RIGHT -> right();
         };
     }
 
@@ -52,15 +52,43 @@ public class Coordinates {
 
     public List<Coordinates> allAdjacentAndDiagonal() {
         List<Coordinates> coordinates = allAdjacent();
-        // top left
-        coordinates.add(new Coordinates(x - 1, y + 1));
-        // top right
-        coordinates.add(new Coordinates(x + 1, y + 1));
-        // bottom left
-        coordinates.add(new Coordinates(x - 1, y - 1));
-        // bottom right
-        coordinates.add(new Coordinates(x + 1, y - 1));
+        coordinates.add(topLeft());
+        coordinates.add(topRight());
+        coordinates.add(bottomLeft());
+        coordinates.add(bottomRight());
         return coordinates;
+    }
+
+    public Coordinates right() {
+        return new Coordinates(x + 1, y);
+    }
+
+    public Coordinates left() {
+        return new Coordinates(x - 1, y);
+    }
+
+    public Coordinates bottom() {
+        return new Coordinates(x, y - 1);
+    }
+
+    public Coordinates top() {
+        return new Coordinates(x, y + 1);
+    }
+
+    public Coordinates bottomRight() {
+        return new Coordinates(x + 1, y - 1);
+    }
+
+    public Coordinates bottomLeft() {
+        return new Coordinates(x - 1, y - 1);
+    }
+
+    public Coordinates topRight() {
+        return new Coordinates(x + 1, y + 1);
+    }
+
+    public Coordinates topLeft() {
+        return new Coordinates(x - 1, y + 1);
     }
 
     public List<Coordinates> allValidAdjacentAndDiagonal(int maxX, int maxY) {
